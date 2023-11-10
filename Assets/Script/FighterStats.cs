@@ -45,6 +45,8 @@ public class FighterStats : MonoBehaviour, IComparable
 
     private GameObject GameControllerObj;
 
+    private bool isDefense;
+
     void Awake()
     {
         healthTransform = healthFill.GetComponent<RectTransform>();
@@ -61,32 +63,45 @@ public class FighterStats : MonoBehaviour, IComparable
 
     public void ReceiveDamage(float damage)
     {
-        health = health - damage;
-        animator.Play("hurt");
-
-        //set damage text
-
-        if (health <= 0)
+        if (!isDefense)
         {
-            dead = true;
-            gameObject.tag = "Dead";
-            Destroy(healthFill);
-            Destroy(gameObject);
+            health = health - damage;
+            animator.Play("hurt");
+
+            //set damage text
+
+            if (health <= 0)
+            {
+                dead = true;
+                gameObject.tag = "Dead";
+                Destroy(healthFill);
+                Destroy(gameObject);
+            }
+
+            else if (damage > 0)
+            {
+                xNewHealthScale = healthScale.x * (health / startHealth);
+                healthFill.transform.localScale = new Vector2(xNewHealthScale, healthScale.y);
+            }
+
+            if (damage > 0)
+            {
+                GameControllerObj.GetComponent<GameController>().battleText.gameObject.SetActive(true);
+                GameControllerObj.GetComponent<GameController>().battleText.text = damage.ToString();
+            }
+
+            
         }
 
-        else if (damage > 0)
-        {
-            xNewHealthScale = healthScale.x * (health / startHealth);
-            healthFill.transform.localScale = new Vector2(xNewHealthScale, healthScale.y);
-        }
+        isDefense = false;
 
-        if(damage > 0)
-        {
-            GameControllerObj.GetComponent<GameController>().battleText.gameObject.SetActive(true);
-            GameControllerObj.GetComponent<GameController>().battleText.text = damage.ToString();
-        }
-        
         Invoke("ContinueGame", 2);
+
+    }
+
+    public void SetDefense()
+    {
+        isDefense = true;
     }
 
     public void updateMagicFill(float cost)

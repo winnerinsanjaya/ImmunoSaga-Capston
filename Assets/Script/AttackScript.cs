@@ -58,6 +58,20 @@ public class AttackScript : MonoBehaviour
             Invoke("SkipTurnContinueGame", 2);
         }
     }
+
+    public void Defense(GameObject victim)
+    {
+        Debug.Log("test");
+        attackerStats = owner.GetComponent<FighterStats>();
+        targetStats = victim.GetComponent<FighterStats>();
+
+        attackerStats.SetDefense();
+        targetStats.ReceiveDamage(0);
+
+
+    }
+
+
     void SkipTurnContinueGame()
     {
         GameObject.Find("GameControllerObject").GetComponent<GameController>().NextTurn();

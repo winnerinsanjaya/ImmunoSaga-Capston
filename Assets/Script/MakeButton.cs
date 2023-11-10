@@ -13,22 +13,21 @@ public class MakeButton : MonoBehaviour
 
     void Start()
     {
-        string temp = gameObject.name;
-        gameObject.GetComponent<Button>().onClick.AddListener(() => AttachCallBack(temp));
+        gameObject.GetComponent<Button>().onClick.AddListener(() => AttachCallBack());
         hero = GameObject.FindGameObjectWithTag("Hero");
     }
 
-    private void AttachCallBack(string btn)
+    private void AttachCallBack()
     {
-        if (btn.CompareTo("MeeleBtn") == 0)
+        if (gameObject.name == "MeeleBtn")
         {
             hero.GetComponent<FighterAction>().SelectAttack("meele");
         }
-        else if (btn.CompareTo("RangeBtn") == 0)
+        else if (gameObject.name == "RangeBtn")
         {
             hero.GetComponent<FighterAction>().SelectAttack("range");
         }
-        else if (btn.CompareTo("DefBtn") == 0)
+        else if (gameObject.name == "DefBtn")
         {
             hero.GetComponent<FighterAction>().SelectAttack("def");
         }
