@@ -11,10 +11,10 @@ public class FighterStats : MonoBehaviour, IComparable
     private Animator animator;
 
     [SerializeField]
-    private GameObject healthFill;
+    private Image healthFill;
 
     [SerializeField]
-    private GameObject magicFill;
+    private Image magicFill;
 
     [Header("Stats")]
     public float health;
@@ -49,11 +49,11 @@ public class FighterStats : MonoBehaviour, IComparable
 
     void Awake()
     {
-        healthTransform = healthFill.GetComponent<RectTransform>();
-        healthScale = healthFill.transform.localScale;
+       // healthTransform = healthFill.GetComponent<RectTransform>();
+       // healthScale = healthFill.transform.localScale;
 
-        magicTransform = magicFill.GetComponent<RectTransform>();
-        magicScale = magicFill.transform.localScale;
+      //  magicTransform = magicFill.GetComponent<RectTransform>();
+       // magicScale = magicFill.transform.localScale;
 
         startHealth = health;
         startMagic = magic;
@@ -80,8 +80,10 @@ public class FighterStats : MonoBehaviour, IComparable
 
             else if (damage > 0)
             {
-                xNewHealthScale = healthScale.x * (health / startHealth);
-                healthFill.transform.localScale = new Vector2(xNewHealthScale, healthScale.y);
+                // xNewHealthScale = healthScale.x * (health / startHealth);
+                // healthFill.transform.localScale = new Vector2(xNewHealthScale, healthScale.y);
+                float hlth = health / startHealth;
+                healthFill.fillAmount = hlth;
             }
 
             if (damage > 0)
@@ -109,8 +111,10 @@ public class FighterStats : MonoBehaviour, IComparable
         if (cost > 0)
         {
             magic = magic - cost;
-            xNewMagicScale = magicScale.x * (magic / startMagic);
-            magicFill.transform.localScale = new Vector2(xNewMagicScale, magicScale.y);
+           // xNewMagicScale = magicScale.x * (magic / startMagic);
+            //magicFill.transform.localScale = new Vector2(xNewMagicScale, magicScale.y);
+            float mgc = magic / startMagic;
+            magicFill.fillAmount = mgc;
         }
     }
 
